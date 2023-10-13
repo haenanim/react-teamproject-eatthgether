@@ -31,20 +31,18 @@ function Login() {
       .get(JSON_SERVER + '/users')
       .then((response) => {
         const users = response.data;
-        const user = users.find((user) => user.username === username);
-
+        const user = users.find(
+          (user) => user.username === username && user.password === password
+        );
         if (!user) {
-          alert('아이디가 일치하지 않습니다.');
+          alert('아이디나 비밀번호가 일치하지 않습니다.');
           return;
         }
-        if (user.password !== password) {
-          alert('비밀번호가 일치하지 않습니다.');
-          return;
-        }
-          alert('로그인 성공');
-          localStorage.setItem('user', JSON.stringify(user)); //로컬 스토리지에 사용자 정보 저장
-          setIsLoggedIn(true);
-          navigate('/ETMain');
+       
+        
+        localStorage.setItem('user', JSON.stringify(user)); //로컬 스토리지에 사용자 정보 저장
+        setIsLoggedIn(true);
+        navigate('/ETMain');
       })
       .catch((error) => {
         alert('로그인 중 오류 발생');
